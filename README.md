@@ -1,0 +1,2 @@
+# myWeatherStation
+Embedded Linux project
