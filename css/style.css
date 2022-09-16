@@ -1,3 +1,93 @@
+/*
+    __________________________________________________________________________
+   |                                                                          |
+   |                      MY WHEATHER STATION - STYLE                         |
+   |                                                                          |
+   |    Author            :   M. JALES, P. GARREAU                            |
+   |    Status            :   Under Development                               |
+   |    Last Modification :   16/09/2022                                      |
+   |    Project           :   EMBEDDED LINUX PROJECT                          |
+   |                                                                          |
+   |__________________________________________________________________________|
+   
+*/
+
+/* ------------------- COLOR THEME ------------------- */
+:root {
+    --white-color: #ffffff;
+    --green-color: #75aa28;
+    --pink-color: #bc1142;
+    --black-color: #000000;
+
+    --left-section-width: 8%;
+}
+
+
+/* ------------------- ALL PAGES STYLES ------------------- */
 body {
     font-family: "Trebuchet MS", Helvetica, Arial;
+    background-image: url("../assets/images/background.png");
+    background-size: cover;
+}
+
+.bodyContainer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: calc(100% - var(--left-section-width));
+    height: 90vh;
+    background-color: var(--white-color);
+    border-radius: 30px;
+    border-bottom-right-radius: 0;
+}
+
+.leftContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--left-section-width);
+    height: 100vh;
+    color: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.logoMinesContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.logoMines {
+    width: 60%;
+    position: absolute;
+    bottom: 5%;
+}
+
+.menuContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50vh;
+}
+
+.menuItemContainer {
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menuItemContainer:hover {
+    background-color: var(--white-color);
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.menuIcon {
+    width: 35%;
 }
