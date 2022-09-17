@@ -57,7 +57,7 @@
         <section class="bodyContainer">
         </section>
         <script type="text/javascript">
-            var page = "temperature";
+            var page = "humidity";
         </script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>

@@ -29,6 +29,8 @@ var homeIcon = document.getElementById('homeIcon');
 var logoWeatherStation = document.getElementById('logoWeatherStation');
 var logoMines = document.getElementById('logoMines');
 
+var page = document.getElementsByClassName('titleTopContainer')[0].innerText.toLowerCase();
+
 /* ----------------------------------------------------------------------------
                                     MAIN
 ---------------------------------------------------------------------------- */
