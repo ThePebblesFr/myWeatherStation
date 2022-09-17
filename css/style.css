@@ -12,14 +12,17 @@
    
 */
 
-/* ------------------- COLOR THEME ------------------- */
+/* ------------------- GLOBAL VARIABLES ------------------- */
 :root {
+    /* Colors */
     --white-color: #ffffff;
     --green-color: #75aa28;
     --pink-color: #bc1142;
     --black-color: #000000;
 
+    /* Sizes */
     --left-section-width: 8%;
+    --border-radius-size: 35px;
 }
 
 
@@ -37,7 +40,7 @@ body {
     width: calc(100% - var(--left-section-width));
     height: 90vh;
     background-color: var(--white-color);
-    border-radius: 30px;
+    border-radius: var(--border-radius-size);
     border-bottom-right-radius: 0;
 }
 
@@ -63,6 +66,7 @@ body {
     width: 60%;
     position: absolute;
     bottom: 5%;
+    cursor: pointer;
 }
 
 .menuContainer {
@@ -88,13 +92,13 @@ body {
 }
 
 .fakeItemContainer {
-    height: 35px;
+    height: 60px;
 }
 
 .menuItemContainer:hover {
     background-color: var(--white-color);
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    border-top-left-radius: var(--border-radius-size);
+    border-bottom-left-radius: var(--border-radius-size);
 }
 
 .menuIcon {
@@ -149,7 +153,7 @@ body {
 .contributors {
     opacity: 0;
     width: 0;
-    transition: width 0.2s ease, opacity 0.2s ease;
+    transition: width 0.4s ease, opacity 0.4s ease;
     transition-delay: opacity 0.2s;
 }
 
@@ -157,7 +161,7 @@ body {
     .contributorsContainer:hover .contributors {
         opacity: 1;
         width: 100%;
-        transition: width 0.2s ease, opacity 0.2s ease;
+        transition: width 0.4s ease, opacity 0.4s ease;
         transition-delay: width 0.2s;
     }
 }
