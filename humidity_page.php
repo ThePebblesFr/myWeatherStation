@@ -47,7 +47,7 @@
             <div class="logoWeatherStationContainer">
                 <img src="assets/images/logo_weather_station.png" class="logoWeatherStation" id="logoWeatherStation"/>
             </div>
-            <div class="titleTopContainer">RELATIVE HUMIDITY</div>
+            <div class="titleTopContainer">HUMIDITY</div>
             <div class="contributorsContainer" id="contributorsContainer">
                 <img src="assets/images/photo_mickael.png" class="pdpImage" id="imageMickael"/>
                 <img src="assets/images/photo_pierre.png" class="pdpImage" id="imagePierre"/>
@@ -56,9 +56,6 @@
         </section>
         <section class="bodyContainer">
         </section>
-        <script type="text/javascript">
-            var page = "humidity";
-        </script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
     </body>

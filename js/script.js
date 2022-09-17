@@ -88,6 +88,7 @@ for (var i = 0; i < iconsMenu.length; i++) {
     else
     {
         iconsMenu[i].src = 'assets/images/' + nameIconsMenu[i] + '_icon_colored.png';
+        itemsMenu[i].style.backgroundColor = '#FFFFFF';
         if (i != 0)
         {
             itemsMenu[i - 1].style.borderBottomRightRadius = borderRadius;
@@ -109,7 +110,7 @@ for (var i = 0; i < iconsMenu.length; i++) {
     // Clicking effects
     itemsMenu[i].addEventListener('click', (function(arg) {
         return function() {
-            window.location.href = nameIconsMenu[arg] + '_page.php';
+            window.location.href = (arg == 0) ? 'index.php' : nameIconsMenu[arg] + '_page.php';
         }
     }) (i));
 }
