@@ -24,6 +24,7 @@
     <body>
         <section class="leftContainer">
             <section class="menuContainer">
+                <div class="fakeItemContainer"></div>
                 <div class="menuItemContainer">
                     <img src="assets/images/home_icon.png" class="menuIcon"/>
                 </div>
@@ -36,17 +37,26 @@
                 <div class="menuItemContainer">
                     <img src="assets/images/pressure_icon.png" class="menuIcon"/>
                 </div>
+                <div class="fakeItemContainer"></div>
             </section>
             <section class="logoMinesContainer">
                 <img src="assets/images/logo_mines.png" class="logoMines"/>
             </section>
         </section>
-        <section class="bodyContainer">
-
+        <section class="topContainer">
+            <div class="logoWeatherStationContainer">
+                <img src="assets/images/logo_weather_station.png" class="logoWeatherStation" id="logoWeatherStation"/>
+            </div>
+            <div class="titleTopContainer">DASHBOARD</div>
+            <div class="contributorsContainer" id="contributorsContainer">
+                <img src="assets/images/photo_mickael.png" class="pdpImage" id="imageMickael"/>
+                <img src="assets/images/photo_pierre.png" class="pdpImage" id="imagePierre"/>
+                <div class="contributors">Contributors</div>
+            </div>
         </section>
-        <script type="text/javascript">
-            
-        </script>
+        <section class="bodyContainer">
+        </section>
+        <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
     </body>
 </html>

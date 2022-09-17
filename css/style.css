@@ -71,15 +71,24 @@ body {
     flex-direction: column;
     justify-content: space-around;
     height: 50vh;
+    background-color: var(--white-color);
 }
 
-.menuItemContainer {
+.menuItemContainer, .fakeItemContainer {
     height: 25%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: var(--pink-color);
+}
+
+.menuItemContainer {
     cursor: pointer;
+}
+
+.fakeItemContainer {
+    height: 35px;
 }
 
 .menuItemContainer:hover {
@@ -89,5 +98,78 @@ body {
 }
 
 .menuIcon {
+    transition: all 0.2s ease;
     width: 35%;
+}
+
+.topContainer {
+    position: fixed;
+    left: 1.5%;
+    top: 0;
+    width: 96%;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleTopContainer {
+    font-size: 20px;
+    color: var(--white-color);
+}
+
+.pdpImage {
+    height: 8vh;
+    border-radius: 8vh;
+}
+
+#imagePierre {
+    position: relative;
+    right: 10%;
+    z-index: 0;
+}
+
+#imageMickael {
+    position: relative;
+    z-index: 1;
+}
+
+.contributorsContainer {
+    width: 15%;
+    color: var(--white-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.contributors {
+    opacity: 0;
+    width: 0;
+    transition: width 0.2s ease, opacity 0.2s ease;
+    transition-delay: opacity 0.2s;
+}
+
+@media(hover:hover) {
+    .contributorsContainer:hover .contributors {
+        opacity: 1;
+        width: 100%;
+        transition: width 0.2s ease, opacity 0.2s ease;
+        transition-delay: width 0.2s;
+    }
+}
+
+.logoWeatherStationContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+}
+
+.logoWeatherStation {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 10vh;
 }
