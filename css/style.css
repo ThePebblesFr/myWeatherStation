@@ -234,7 +234,7 @@ body {
     border-radius: var(--border-radius-size);
 }
 
-.graphContainer {
+.graphContainer, .dateTimeContainer {
     width: 60%;
     height: 95%;
     display: flex;
@@ -303,4 +303,28 @@ body {
 
 .realTimeTemperatureIcon {
     width: 40%;
+}
+
+.dayNightContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.realTimeDayNightIcon {
+    width: 70%;
+}
+
+.dateTimeContainer {
+    color: var(--white-color);
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeContainer {
+    font-size: 95px;
+}
+
+.dateContainer {
+    font-size: 25px;
 }
