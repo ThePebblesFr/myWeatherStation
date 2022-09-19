@@ -58,7 +58,13 @@
         <section class="bodyContainer">
             <section class="topBodyContainer">
                 <section class="topLeftBodyContainer">
-                    
+                    <section class="graphContainer">
+                        <div class="titleDataHome"></div>
+                        <div class="graphSubContainer"></div>
+                    </section>
+                    <section class="dataHomeContainer">
+                            <div ><img src="assets/images/hot_icon.png" class="realTimeTemperatureIcon" id="temperatureIcon"/></div>
+                    </section>
                 </section>
                 <section class="topRightBodyContainer">
                     <section class="graphContainer">
@@ -69,7 +75,7 @@
                     </section>
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
-                            <div class=""><img src="assets/images/hot_icon.png" class="realTimeTemperatureIcon" id="temperatureIcon"/></div>
+                            <div><img src="assets/images/hot_icon.png" class="realTimeTemperatureIcon" id="temperatureIcon"/></div>
                             <div class="celsiusData" id="temperatureValue">15.49°C</div>
                             <div class="fahrneheitData" id="fahrenHeitValue">67.23°F</div>
                         </div>
@@ -87,7 +93,7 @@
                     </section>
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
-                            <div class=""><img src="assets/images/humid_icon.png" class="realTimeTemperatureIcon" id="humidityIcon"/></div>
+                            <div ><img src="assets/images/humid_icon.png" class="realTimeTemperatureIcon" id="humidityIcon"/></div>
                             <div class="celsiusData" id="humidityValue">46.27%</div>
                         </div>
                         <div class="detailsItemContainer">See details</div>
@@ -102,7 +108,7 @@
                     </section>
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
-                            <div class=""><img src="assets/images/high_pressure.png" class="realTimeTemperatureIcon" /></div>
+                            <div ><img src="assets/images/high_pressure.png" class="realTimeTemperatureIcon" /></div>
                             <div class="celsiusData">0.987</div>
                             <div class="fahrneheitData">bar</div>
                         </div>

@@ -295,3 +295,5 @@ else
 
 var fahrenHeitTemp = Math.round((parseFloat(temperatureValue.innerText.substring(0,5)) * (9 / 5) + 32) * 100) / 100;
 fahrenHeitValue.innerHTML = fahrenHeitTemp.toString() + "°F";
+
+// Date and time --------------------------------------------------------------
