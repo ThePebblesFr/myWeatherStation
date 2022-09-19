@@ -16,13 +16,16 @@
 :root {
     /* Colors */
     --white-color: #ffffff;
-    --green-color: #75aa28;
+    --grey-color: #EAEAEA;
+    --yellow-color: #fdb813;
+    --blue-color: #0487E2;
     --pink-color: #bc1142;
     --black-color: #000000;
 
     /* Sizes */
     --left-section-width: 8%;
     --border-radius-size: 35px;
+    --border-radius-little-size: 15px;
 }
 
 
@@ -176,4 +179,128 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     height: 10vh;
+}
+
+.topBodyContainer, .bottomBodyContainer {
+    position: relative;
+    top: 4%;
+    left: 2.5%;
+    right: 2.5%;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bottomBodyContainer {
+    top: 8%;
+}
+
+.topLeftBodyContainer, .bottomLeftBodyContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 48.5%;
+    height: 40vh;
+    background-image: url('../assets/images/background_tiles.png');
+    background-size: cover;
+    border-radius: var(--border-radius-size);
+}
+
+.bottomLeftBodyContainer {
+    background-image: url('../assets/images/background_tiles_2.png');
+}
+
+.topRightBodyContainer {
+    width: 48.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('../assets/images/background_tiles_1.png');
+    background-size: cover;
+    border-radius: var(--border-radius-size);
+}
+
+.bottomRightBodyContainer {
+    width: 48.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('../assets/images/background_tiles_3.png');
+    background-size: cover;
+    border-radius: var(--border-radius-size);
+}
+
+.graphContainer {
+    width: 60%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.titleDataHome {
+    text-align: center;
+    font-size: 25px;
+    color: var(--white-color);
+}
+
+.graphSubContainer {
+    width: 95%;
+    height: calc(100% - 50px);
+}
+
+.dataHomeContainer {
+    border-radius: var(--border-radius-size);
+    width: 27%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dataItemContainer {
+    width: 100%;
+    height: 65%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detailsItemContainer {
+    background-color: var(--white-color);
+    width: 80%;
+    height: 20%;
+    border-radius: var(--border-radius-little-size);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue-color);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.detailsItemContainer:hover {
+    background-color: var(--grey-color);
+}
+
+.celsiusData {
+    color: var(--white-color);
+    font-size: 35px;
+}
+
+.fahrneheitData {
+    color: var(--grey-color);
+    font-size: 20px;
+}
+
+.realTimeTemperatureIcon {
+    width: 40%;
 }
