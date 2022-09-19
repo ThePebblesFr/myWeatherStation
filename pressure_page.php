@@ -2,7 +2,7 @@
 /*
     __________________________________________________________________________
    |                                                                          |
-   |                      MY WHEATHER STATION - INDEX                         |
+   |                    MY WHEATHER STATION - PRESSURE                        |
    |                                                                          |
    |    Author            :   P. GARREAU, M. JALES                            |
    |    Status            :   Under Development                               |
@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="css/style.css" />
         <title>myWeatherStation - Welcome</title>
         <script type="text/javascript" src="js/jQuery.js"></script>
+        <script src="node_modules/chart.js/dist/chart.js"></script>
     </head>
     <body>
         <section class="leftContainer">
@@ -47,7 +48,7 @@
             <div class="logoWeatherStationContainer">
                 <img src="assets/images/logo_weather_station.png" class="logoWeatherStation" id="logoWeatherStation"/>
             </div>
-            <div class="titleTopContainer">PRESSURE</div>
+            <div class="titleTopContainer">DASHBOARD</div>
             <div class="contributorsContainer" id="contributorsContainer">
                 <img src="assets/images/photo_mickael.png" class="pdpImage" id="imageMickael"/>
                 <img src="assets/images/photo_pierre.png" class="pdpImage" id="imagePierre"/>
@@ -55,6 +56,7 @@
             </div>
         </section>
         <section class="bodyContainer">
+            
         </section>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>

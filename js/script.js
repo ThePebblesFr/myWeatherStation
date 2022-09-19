@@ -18,11 +18,12 @@
 
 // Variables ------------------------------------------------------------------
 var borderRadius = '30px';
-var daysOfTheWeek = Array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
+var daysOfTheWeek = Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+var monthsOfTheYear = Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 var colors = Array('#FFFFFF', '#EAEAEA', '#fdb813', '#0487E2', '#bc1142', '#000000');
+var nameIconsMenu = Array('home', 'temperature', 'humidity', 'pressure');
 
 // Items ----------------------------------------------------------------------
-var nameIconsMenu = Array('home', 'temperature', 'humidity', 'pressure');
 var itemsMenu = document.getElementsByClassName('menuItemContainer');
 var fakeItem = document.getElementsByClassName('fakeItemContainer');
 var iconsMenu = document.getElementsByClassName('menuIcon');
@@ -31,17 +32,7 @@ var homeIcon = document.getElementById('homeIcon');
 var logoWeatherStation = document.getElementById('logoWeatherStation');
 var logoMines = document.getElementById('logoMines');
 
-var temperatureIcon = document.getElementById('temperatureIcon');
-var humidityIcon = document.getElementById('humidityIcon');
-var temperatureValue = document.getElementById('temperatureValue');
-var humidityValue = document.getElementById('humidityValue');
-
-var fahrenHeitValue = document.getElementById('fahrenHeitValue');
-
 var page = document.getElementsByClassName('titleTopContainer')[0].innerText.toLowerCase();
-const ctx_temp = document.getElementById('chartTemperature').getContext('2d');
-const ctx_hum = document.getElementById('chartHumidity').getContext('2d');
-const ctx_press = document.getElementById('chartPressure').getContext('2d');
 
 /* ----------------------------------------------------------------------------
                                     MAIN
@@ -128,7 +119,7 @@ for (var i = 0; i < iconsMenu.length; i++) {
 }
 
 homeIcon.addEventListener('click', function() {
-    window.open('index.php');
+    window.location.href = 'index.php';
 });
 
 logoWeatherStation.addEventListener('mouseenter', function() {
@@ -146,154 +137,3 @@ logoMines.addEventListener('click', function() {
 contributorsContainer.addEventListener('click', function() {
     window.open('https://github.com/ThePebblesFr/myWeatherStation', '_blank');
 });
-
-// Charts index.php -----------------------------------------------------------
-const chartTemperature = new Chart(ctx_temp, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
-
-const chartHumidity = new Chart(ctx_hum, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
-
-const chartPressure = new Chart(ctx_press, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
-
-// Data conversion ------------------------------------------------------------
-if (parseFloat(temperatureValue.innerText.substring(0,5)) > 20.0)
-{
-    temperatureIcon.src = 'assets/images/hot_icon.png';
-}
-else
-{
-    temperatureIcon.src = 'assets/images/cold_icon.png';
-}
-
-if (parseFloat(humidityValue.innerText.substring(0,5)) > 50.0)
-{
-    humidityIcon.src = 'assets/images/humid_icon.png';
-}
-else
-{
-    humidityIcon.src = 'assets/images/dry_icon.png';
-}
-
-var fahrenHeitTemp = Math.round((parseFloat(temperatureValue.innerText.substring(0,5)) * (9 / 5) + 32) * 100) / 100;
-fahrenHeitValue.innerHTML = fahrenHeitTemp.toString() + "°F";
-
-// Date and time --------------------------------------------------------------

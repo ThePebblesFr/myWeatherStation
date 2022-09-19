@@ -58,12 +58,12 @@
         <section class="bodyContainer">
             <section class="topBodyContainer">
                 <section class="topLeftBodyContainer">
-                    <section class="graphContainer">
-                        <div class="titleDataHome"></div>
-                        <div class="graphSubContainer"></div>
+                    <section class="dateTimeContainer">
+                        <div class="dateContainer" id="dateContainer">Monday 19 September</div>
+                        <div class="timeContainer" id="timeContainer">10:43</div>
                     </section>
                     <section class="dataHomeContainer">
-                            <div ><img src="assets/images/hot_icon.png" class="realTimeTemperatureIcon" id="temperatureIcon"/></div>
+                            <div class="dayNightContainer"><img src="assets/images/day_icon.png" class="realTimeDayNightIcon" id="dayNightIcon"/></div>
                     </section>
                 </section>
                 <section class="topRightBodyContainer">
@@ -118,6 +118,7 @@
             </section>
         </section>
         <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
     </body>
 </html>
