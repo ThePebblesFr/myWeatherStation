@@ -17,7 +17,6 @@
 /* ----------------------------------------------------------------------------
                                      INIT
 ---------------------------------------------------------------------------- */
-
 	$config_file = (object) parse_ini_file("config.ini");
 	$output = array(
         'exitcode' => 500,
@@ -25,7 +24,6 @@
     );
 
     // BDD
-
     $servname = $config_file->servername;
     $user = $config_file->username;
     $pwd = $config_file->password;
@@ -47,14 +45,18 @@
 
 					$temperature /= 1000;
 
+                    echo $servname . '<br />';
+                    echo $user . '<br />';
+                    echo $pwd . '<br />';
+                    echo $bddname . '<br />';
+
                     // Update database 
-                    
-                    $conn = new PDO("mysql:host=$servname;dbname=$bddname", $user, $pwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_LOCAL_INFILE => true));
+                    $bddConn = new PDO('mysql:host=localhost;dbname='.$config_file->database.';charset=utf8', $config_file->username, $config_file->password);
+                    //$conn = new PDO("mysql:host=$servname;dbname=$bddname", $user, $pwd);
 
+                    echo "connected<br />";
                     $date = date('Y-m-d H:i:s');
-
-                    $sql = "INSERT INTO $table (date_, temperature, humidity, pressure) VALUES (:date_, :temperature, :relativeHumidity, :pressure"
-
+                    $sql = "INSERT INTO $table (date_, temperature, humidity, pressure) VALUES (:date_, :temperature, :relativeHumidity, :pressure";
                     $request = $conn->prepare($sql);
 
                     $request->bindParam(':date_', $date);
