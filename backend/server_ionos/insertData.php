@@ -60,10 +60,10 @@
                     $temperature = floatval($_POST['temperature']);
                     $humidity = floatval($_POST['humidity']);
                     $pressure = floatval($_POST['pressure']);
-                    $dateTime = $_POST['dateTime'];
+                    $dateTime = date('Y-m-d H:i:s');
 
                     $bddConn = new PDO('mysql:host='.$servname.';dbname='.$config_file->database.';charset=utf8', $config_file->username, $config_file->password);
-                    
+
                     $sql = "INSERT INTO ".$table." (date_, temperature, humidity, pressure) VALUES (:date_, :temperature, :humidity, :pressure)";
                     $request = $bddConn->prepare($sql);
 
@@ -81,7 +81,7 @@
                 else
                 {
                     $output['exitcode'] = 403;
-                    $output['message'] = 'Access denied ! Wrong token';
+                    $output['message'] = 'Access denied ! Wrong token ';
                 }
             }
             else

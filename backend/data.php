@@ -35,6 +35,7 @@
 					$pressure = round(floatval(file_get_contents("/sys/bus/iio/devices/iio:device0/in_pressure_input")), 2);
 
 					$temperature /= 1000;
+                    $pressure *= 100;
                     $dateTime = date('Y-m-d H:i:s');
 
                     // $data = array(

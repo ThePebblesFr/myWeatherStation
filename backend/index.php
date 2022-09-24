@@ -31,7 +31,7 @@
 			var pressure = document.getElementById('pressure');
 
 			var urlData = "data.php?token=" + api_token;
-			var urlComif = "http://software-developments-pg.com/others/myWeatherStation/insertData.php";
+			var urlComif = "http://software-developments-pg.com/others/myWeatherStation/insertData.php?token=" + api_token;
 
 			setInterval(function() {
 				$.ajax({
@@ -60,6 +60,10 @@
                                 },
 								headers: {
 									'Access-Control-Allow-Origin': '*'
+								},
+								success: function(response) {
+									// console.log(urlComif);
+									// console.log(response);
 								}
 							});
 						}
@@ -71,7 +75,7 @@
 						}
 					}
 				});
-			}, 1000);
+			}, 30000);
 		</script>
 	</body>
 </html>

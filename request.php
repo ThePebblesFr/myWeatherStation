@@ -28,25 +28,25 @@
     $daily_avg_pressure = 'SELECT AVG(SELECT pressure FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 23:59:5999") FROM data';
     $conn->exec($daily_avg_pressure);
 
-    $hourly_avg_temperature = 'SELECT AVG(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data'
+    $hourly_avg_temperature = 'SELECT AVG(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data';
     $conn->exec($hourly_avg_temperature);
 
-    $hourly_avg_humidity = 'SELECT AVG(SELECT humidity FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data'
+    $hourly_avg_humidity = 'SELECT AVG(SELECT humidity FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data';
     $conn->exec($hourly_avg_humidity);
 
-    $hourly_avg_pressure = 'SELECT AVG(SELECT pressure FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data'
+    $hourly_avg_pressure = 'SELECT AVG(SELECT pressure FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 00:59:5999") FROM data';
     $conn->exec($hourly_avg_pressure);
 
-    $six_hours_avg_temperature = 'SELECT AVG(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data'
+    $six_hours_avg_temperature = 'SELECT AVG(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data';
     $conn->exec($hourly_avg_temperature);
 
-    $six_hours_avg_pressure = 'SELECT AVG(SELECT pressure FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data'
+    $six_hours_avg_pressure = 'SELECT AVG(SELECT pressure FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data';
     $conn->exec($hourly_avg_pressure);
 
-    $six_hours_avg_humidity = 'SELECT AVG(SELECT humidity FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data'
+    $six_hours_avg_humidity = 'SELECT AVG(SELECT humidity FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 05:59:5999") FROM data';
     $conn->exec($hourly_avg_humidity);
     
-    $daily_min_temperature = 'SELECT MIN(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 23:59:5999") FROM data';
+    $daily_min_temperature = 'SELECT MIN(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 23:59:5999") AS "minDaily" FROM data';
     $conn->exec($daily_avg_temperature);
 
     $daily_max_temperature = 'SELECT MIN(SELECT temperature FROM data WHERE date_ >= "2022-09-24 00:00:0000" and date_ <= "2022-09-24 23:59:5999") FROM data';

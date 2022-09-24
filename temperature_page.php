@@ -12,6 +12,24 @@
    |__________________________________________________________________________|
 
 */
+
+    $config_file = (object) parse_ini_file("config.ini");
+    $bddConn = new PDO('mysql:host='.$config_file->servername.';dbname='.$config_file->database.';charset=utf8', $config_file->username, $config_file->password);
+
+    // Get Last Data
+    $getLastData = 'SELECT * FROM data ORDER BY date_ DESC LIMIT 1';
+    $requestGetLastData = $bddConn->query($getLastData);
+    $outputGetLastData = $requestGetLastData->fetch();
+
+    // Get Min of the day
+    // $day = date('Y-m-d');
+    // $getMinDaily = 'SELECT MIN(SELECT temperature FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day.'") AS "minDaily" FROM data';
+    // $requestGetMinDaily = $bddConn->query($getMinDaily);
+    // $outputGetMinDaily = $requestGetMinDaily->fetch();
+
+    // Get Average of the day
+
+    // Get Max of the day
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,7 +83,7 @@
                                 <img src="assets/images/temperature_icon.png" class="iconDetailedPage"/>
                             </section>
                             <section class="dataItemDetailedPageContainer">
-                                <div class="celsiusData" id="temperatureValue">15.49°C</div>
+                                <div class="celsiusData" id="temperatureValue"><?php echo $outputGetLastData['temperature'] ?>°C</div>
                                 <div class="fahrneheitData" id="fahrenHeitValue">67.23°F</div>
                             </section>
                         </div>
@@ -80,13 +98,25 @@
                         </div>
                     </section>
                     <section class="leftStatsBodyContainer">
-                        <div>Minimum : 22.43°C</div>
+                        <div>Minimum : <?php // echo $outputGetMinDaily['minDaily']; ?>°C</div>
                         <div>Averaged : 24.32°C</div>
                         <div>Maximum : 26.56°C</div>
                     </section>
                 </section>
                 <section class="rightBodyContainer">
-                    
+                    <section class="titleHistoricContainer">Past days</section>
+                    <section class="contentHistoricContainer">
+                        <div class="itemHistoricContainer">
+                            <div>Sat 24 Sept</div>
+                            <div>26.56°C</div>
+                            <div><img src="assets/images/hot_icon.png" class="iconHistoric" id="temperatureHistoricIcon"/></div>
+                        </div>
+                        <div class="itemHistoricContainer">
+                            <div>Sat 24 Sept</div>
+                            <div>26.56°C</div>
+                            <div><img src="assets/images/hot_icon.png" class="iconHistoric" id="temperatureHistoricIcon"/></div>
+                        </div>
+                    </section>
                 </section>
 
             </section>

@@ -25,6 +25,7 @@ var dateContainer = document.getElementById('dateContainer');
 var timeContainer = document.getElementById('timeContainer');
 
 const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
+var timeOfTheDay = Array('00h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h');
 
 /* ----------------------------------------------------------------------------
                                     MAIN
@@ -51,13 +52,13 @@ setInterval(function() {
 const chartDetailedTemperature = new Chart(ctx_detailed_temp, {
     type: 'line',
     data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
+        labels: timeOfTheDay,
         datasets: [{
             label: '',
             data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
             fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
+            borderColor: colors[5],
+            pointBackgroundColor: colors[5],
             tension: 0.2
         }]
     },
