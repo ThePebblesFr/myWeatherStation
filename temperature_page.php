@@ -154,7 +154,7 @@
             var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
             var chartNbData = 0;
             var chartHourlyTemp = Array();
-            var urlRequest = urlData + '?day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            var urlRequest = urlData + '?data=temperature&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
             $.ajax({
                 type: 'GET',
                 url: urlRequest,
