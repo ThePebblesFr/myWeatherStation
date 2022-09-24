@@ -1,0 +1,169 @@
+/*
+    __________________________________________________________________________
+   |                                                                          |
+   |               MY WHEATHER STATION - HUMIDITY STYLE                       |
+   |                                                                          |
+   |    Author            :   M. JALES, P. GARREAU                            |
+   |    Status            :   Under Development                               |
+   |    Last Modification :   16/09/2022                                      |
+   |    Project           :   EMBEDDED LINUX PROJECT                          |
+   |                                                                          |
+   |__________________________________________________________________________|
+   
+*/
+
+/* ------------------- GLOBAL VARIABLES ------------------- */
+:root {
+    /* Colors */
+    --white-color: #ffffff;
+    --grey-color: #EAEAEA;
+    --yellow-color: #fdb813;
+    --blue-color: #0487E2;
+    --pink-color: #bc1142;
+    --black-color: #000000;
+
+    /* Sizes */
+    --left-section-width: 8%;
+    --border-radius-size: 35px;
+    --border-radius-little-size: 15px;
+}
+
+.tempBodyContainer {
+    position: relative;
+    left: 2%;
+    top: 4%;
+    width: 96%;
+    height: 92%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftBodyContainer, .rightBodyContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    background-image: url('../assets/images/background_tiles.png');
+    background-size: cover;
+    border-radius: var(--border-radius-size);
+}
+
+.rightBodyContainer {
+    width: 38%;
+    background-image: url('../assets/images/background_tiles_1.png');
+}
+
+.iconDetailedPageContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.iconDetailedPage {
+    height: 70%;
+}
+
+.dateSmallContainer {
+    font-size: 18px;
+}
+
+.timeSmallContainer {
+    font-size: 70px;
+}
+
+.dataItemDetailedPageContainer {
+    width: 30%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dateTimeDetailedPageContainer {
+    color: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.leftTopBodyContainer, .leftStatsBodyContainer {
+    width: 88%;
+    height: 18vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.leftBottomBodyContainer {
+    width: 88%;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leftStatsBodyContainer {
+    height: 8vh;
+    align-items: center;
+    color: var(--white-color);
+}
+
+.leftTopLeftContainer {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.graphDetailedPageSubContainer {
+    width: 90%;
+    height: 80%;
+}
+
+.titleHistoricContainer {
+    width: 80%;
+    text-align: center;
+    font-size: 35px;
+    color: var(--white-color);
+}
+
+.contentHistoricContainer {
+    width: 85%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.itemHistoricContainer {
+    padding: 0 2%;
+    width: 95%;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    margin-bottom: 2%;
+    color: var(--white-color);
+    border-radius: var(--border-radius-size);
+}
+
+.itemHistoricContainer:hover {
+    background-color: #0487E2;
+}
+
+.iconHistoric {
+    height: 5vh;
+}
