@@ -22,7 +22,7 @@ CREATE TABLE `data` (
   `date_` DATETIME NOT NULL,
   `temperature` DOUBLE(2,2) NOT NULL,
   `humidity` DOUBLE(2,2) NOT NULL,
-  `pressure` DOUBLE(1,3) NOT NULL
+  `pressure` DOUBLE(4,2) NOT NULL
 );
 
 -- LOCK TABLES `data` WRITE;

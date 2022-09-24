@@ -17,22 +17,11 @@
 /* ----------------------------------------------------------------------------
                                      INIT
 ---------------------------------------------------------------------------- */
-
 	$config_file = (object) parse_ini_file("config.ini");
 	$output = array(
         'exitcode' => 500,
         'message' => 'Internal Server Error'
     );
-
-    // BDD
-
-    $servname = $config_file->servername;
-    $user = $config_file->username;
-    $pwd = $config_file->password;
-    $bddname = $config_file->database;
-    $table = $config_file->table;
-
-    // Server connection
 
     switch ($_SERVER['REQUEST_METHOD'])
     {
@@ -46,31 +35,29 @@
 					$pressure = round(floatval(file_get_contents("/sys/bus/iio/devices/iio:device0/in_pressure_input")), 2);
 
 					$temperature /= 1000;
+                    $dateTime = date('Y-m-d H:i:s');
 
-                    // Update database 
+                    // $data = array(
+                    //     "token" => $config_file->api_token,
+                    //     "temperature" => $temperature,
+                    //     "humidity" => $humidity,
+                    //     "pressure" => $pressure,
+                    //     "date" => $dateTime
+                    // );
+
+                    // $ch = curl_init();
+                    // curl_setopt($ch, CURLOPT_URL, "https://comif-ismin.fr/others/myWeatherStation/insertData.php");
+                    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                    // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    // $curl_output = curl_exec($ch);
                     
-                    $conn = new PDO("mysql:host=$servname;dbname=$bddname", $user, $pwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_LOCAL_INFILE => true));
-
-                    $date = date('Y-m-d H:i:s');
-
-                    $sql = "INSERT INTO $table (date_, temperature, humidity, pressure) VALUES (:date_, :temperature, :relativeHumidity, :pressure"
-
-                    $request = $conn->prepare($sql);
-
-                    $request->bindParam(':date_', $date);
-                    $request->bindParam(':temperature', $temperature);
-                    $request->bindParam(':humidity', $relativeHumidity);
-                    $request->bindParam(':pressure_', $pressure);
-
-                    if ($request->execute())
-                    {
-                        $output['exitcode'] = 200;
-                        $output['message'] = 'OK ! Database updated';
-                        
-                        $output += [ 'temperature' => strval($temperature) ];
-                        $output += [ 'relativeHumidity' => strval($relativeHumidity) ];
-                        $output += [ 'pressure' => strval($pressure) ];
-                    }                                  
+                    $output['temperature'] = $temperature;
+                    $output['humidity'] = $relativeHumidity;
+                    $output['pressure'] = $pressure;
+                    $output['date'] = $dateTime;
+                    $output['exitcode'] = 200;
+                    $output['message'] = 'Ok ! Data sent !';
                 }
                 else
                 {

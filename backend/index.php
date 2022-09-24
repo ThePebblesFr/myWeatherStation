@@ -31,19 +31,37 @@
 			var pressure = document.getElementById('pressure');
 
 			var urlData = "data.php?token=" + api_token;
+			var urlComif = "http://software-developments-pg.com/others/myWeatherStation/insertData.php";
 
 			setInterval(function() {
 				$.ajax({
 					type:"GET",
 					url: urlData,
-					success: function(data) {
+					success: function(dataRPi) {
 						
-						data = JSON.parse(data);
-						if (data['exitcode'] == 200)
+						dataRPi = JSON.parse(dataRPi);
+						if (dataRPi['exitcode'] == 200)
 						{
-							temperature.innerHTML = data['temperature'] + " °C";
-							relativeHumidity.innerHTML = data['relativeHumidity'] + " %";
-							pressure.innerHTML = data['pressure'] + " bar";
+							temperature.innerHTML = dataRPi['temperature'] + " °C";
+							relativeHumidity.innerHTML = dataRPi['humidity'] + " %";
+							pressure.innerHTML = dataRPi['pressure'] + " bar";
+							$.ajax({
+								type: "POST",
+								url: urlComif,
+								beforeSend: function(xhr) {
+									xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+								},
+								data: {
+									"token": api_token,
+									"temperature": dataRPi['temperature'],
+									"humidity": dataRPi['humidity'],
+									"pressure": dataRPi['pressure'],
+									"dateTime": dataRPi['date']
+                                },
+								headers: {
+									'Access-Control-Allow-Origin': '*'
+								}
+							});
 						}
 						else
 						{
