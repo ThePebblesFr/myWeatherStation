@@ -22,14 +22,21 @@
     $outputGetLastData = $requestGetLastData->fetch();
 
     // Get Min of the day
-    // $day = date('Y-m-d');
-    // $getMinDaily = 'SELECT MIN(SELECT temperature FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day.'") AS "minDaily" FROM data';
-    // $requestGetMinDaily = $bddConn->query($getMinDaily);
-    // $outputGetMinDaily = $requestGetMinDaily->fetch();
+    $day = date('Y-m-d');
+    $day_plus_1 = date('Y-m-d', strtotime('+1 day'));
+    $getMinDaily = 'SELECT temperature FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day_plus_1.'" ORDER BY temperature ASC LIMIT 1';
+    $requestGetMinDaily = $bddConn->query($getMinDaily);
+    $outputGetMinDaily = $requestGetMinDaily->fetch();
 
     // Get Average of the day
+    $getAvgDaily = 'SELECT AVG(temperature) AS "avg_temperature" FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day_plus_1.'"';
+    $requestGetAvgDaily = $bddConn->query($getAvgDaily);
+    $outputGetAvgDaily = $requestGetAvgDaily->fetch();
 
     // Get Max of the day
+    $getMaxDaily = 'SELECT temperature FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day_plus_1.'" ORDER BY temperature DESC LIMIT 1';
+    $requestGetMaxDaily = $bddConn->query($getMaxDaily);
+    $outputGetMaxDaily = $requestGetMaxDaily->fetch();
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,9 +105,9 @@
                         </div>
                     </section>
                     <section class="leftStatsBodyContainer">
-                        <div>Minimum : <?php // echo $outputGetMinDaily['minDaily']; ?>°C</div>
-                        <div>Averaged : 24.32°C</div>
-                        <div>Maximum : 26.56°C</div>
+                        <div>Minimum : <?php echo number_format($outputGetMinDaily['temperature'], 2); ?>°C</div>
+                        <div>Averaged : <?php echo number_format($outputGetAvgDaily['avg_temperature'], 2); ?>°C</div>
+                        <div>Maximum : <?php echo number_format($outputGetMaxDaily['temperature'], 2); ?>°C</div>
                     </section>
                 </section>
                 <section class="rightBodyContainer">
