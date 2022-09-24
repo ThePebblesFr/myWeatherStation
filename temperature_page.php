@@ -100,7 +100,7 @@
                                 <img src="assets/images/temperature_icon.png" class="iconDetailedPage"/>
                             </section>
                             <section class="dataItemDetailedPageContainer">
-                                <div class="celsiusData" id="temperatureValue"><?php echo $outputGetLastData['temperature'] ?>°C</div>
+                                <div class="celsiusData" id="temperatureValue"><?php echo number_format($outputGetLastData['temperature'], 2); ?>°C</div>
                                 <div class="fahrneheitData" id="fahrenHeitValue">67.23°F</div>
                             </section>
                         </div>

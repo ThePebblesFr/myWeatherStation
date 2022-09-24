@@ -37,6 +37,22 @@
     $getMaxDaily = 'SELECT pressure FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day_plus_1.'" ORDER BY pressure DESC LIMIT 1';
     $requestGetMaxDaily = $bddConn->query($getMaxDaily);
     $outputGetMaxDaily = $requestGetMaxDaily->fetch();
+
+    $outputGetAvgHourly = array(
+        "nb_hours" => 0
+    );
+    for ($i = 0; $i < 24; $i++) {
+        $day_and_hour = $day . ' ' . strval($i) . ':00:00';
+        $day_and_hour_plus_1 = $day . ' ' . strval($i + 1) . ':00:00';
+        $getAvgDaily = 'SELECT AVG(pressure) AS "avg_pressure" FROM data WHERE date_ >= "'.$day_and_hour.'" AND date_ < "'.$day_and_hour_plus_1.'"';
+        $requestGetAvgDaily = $bddConn->query($getAvgDaily);
+        $temp_result = $requestGetAvgDaily->fetch();
+        if ($temp_result['avg_pressure'] != NULL)
+        {
+            $outputGetAvgHourly['nb_hours']++;
+            $outputGetAvgHourly += [ $i => $temp_result['avg_pressure'] ];
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,7 +106,7 @@
                                 <img src="assets/images/pressure_icon.png" class="iconDetailedPage"/>
                             </section>
                             <section class="dataItemDetailedPageContainer">
-                                <div class="celsiusData" id="pressureValue"><?php echo $outputGetLastData['pressure'] ?>Pa</div>
+                                <div class="celsiusData" id="pressureValue"><?php echo number_format($outputGetLastData['pressure'], 0, '', ''); ?>Pa</div>
                             </section>
                         </div>
                         <section class="dateTimeDetailedPageContainer">
@@ -104,9 +120,9 @@
                         </div>
                     </section>
                     <section class="leftStatsBodyContainer">
-                        <div>Minimum : <?php echo number_format($outputGetMinDaily['pressure']); ?>Pa</div>
-                        <div>Averaged : <?php echo number_format($outputGetAvgDaily['avg_pressure']); ?>Pa</div>
-                        <div>Maximum : <?php echo number_format($outputGetMaxDaily['pressure']); ?>Pa</div>
+                        <div>Minimum : <?php echo number_format($outputGetMinDaily['pressure'], 0, '', ''); ?>Pa</div>
+                        <div>Averaged : <?php echo number_format($outputGetAvgDaily['avg_pressure'], 0, '', ''); ?>Pa</div>
+                        <div>Maximum : <?php echo number_format($outputGetMaxDaily['pressure'], 0, '', ''); ?>Pa</div>
                     </section>
                 </section>
                 <section class="rightBodyContainer">
@@ -130,5 +146,79 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/pressure.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
+        <script type="text/javascript">
+            var today = new Date();
+            var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+            var realMonth = parseInt(today.getMonth()) + 1;
+            var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
+            var chartNbData = 0;
+            var chartHourlyTemp = Array();
+            var urlRequest = urlData + '?data=pressure&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            $.ajax({
+                type: 'GET',
+                url: urlRequest,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    for (var i = 0; i < 24; i++)
+                    {
+                        console.log(data[i]);
+                        chartNbData++;
+                        if (data[i] != 0)
+                        {
+                            chartHourlyTemp.push(parseFloat(data[i]));
+                        }
+                        else
+                        {
+                            chartHourlyTemp.push(null);
+                        }
+                    }
+                    console.log(chartHourlyTemp);
+                }
+            });
+            setTimeout(function() {
+                const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
+                const chartDetailedPressure = new Chart(ctx_detailed_temp, {
+                type: 'line',
+                data: {
+                    labels: timeOfTheDay,
+                    datasets: [{
+                        label: '',
+                        data: chartHourlyTemp,
+                        fill: false,
+                        borderColor: colors[5],
+                        pointBackgroundColor: colors[5],
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        }
+                    }
+                }
+            });
+            }, 1000);
+        </script>
     </body>
 </html>

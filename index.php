@@ -12,6 +12,15 @@
    |__________________________________________________________________________|
 
 */
+
+    $config_file = (object) parse_ini_file("config.ini");
+    $bddConn = new PDO('mysql:host='.$config_file->servername.';dbname='.$config_file->database.';charset=utf8', $config_file->username, $config_file->password);
+
+    // Get Last Data
+    $getLastData = 'SELECT * FROM data ORDER BY date_ DESC LIMIT 1';
+    $requestGetLastData = $bddConn->query($getLastData);
+    $outputGetLastData = $requestGetLastData->fetch();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -76,7 +85,7 @@
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
                             <div><img src="assets/images/hot_icon.png" class="realTimeTemperatureIcon" id="temperatureIcon"/></div>
-                            <div class="celsiusData" id="temperatureValue">15.49°C</div>
+                            <div class="celsiusData" id="temperatureValue"><?php echo number_format($outputGetLastData['temperature'], 2); ?>°C</div>
                             <div class="fahrneheitData" id="fahrenHeitValue">67.23°F</div>
                         </div>
                         <div class="detailsItemContainer">See details</div>
@@ -94,7 +103,7 @@
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
                             <div ><img src="assets/images/humid_icon.png" class="realTimeTemperatureIcon" id="humidityIcon"/></div>
-                            <div class="celsiusData" id="humidityValue">46.27%</div>
+                            <div class="celsiusData" id="humidityValue"><?php echo number_format($outputGetLastData['humidity'], 2); ?>%</div>
                         </div>
                         <div class="detailsItemContainer">See details</div>
                     </section>
@@ -109,8 +118,8 @@
                     <section class="dataHomeContainer">
                         <div class="dataItemContainer">
                             <div ><img src="assets/images/high_pressure.png" class="realTimeTemperatureIcon" /></div>
-                            <div class="celsiusData">0.987</div>
-                            <div class="fahrneheitData">bar</div>
+                            <div class="celsiusData"><?php echo number_format($outputGetLastData['pressure'], 0, '', ''); ?></div>
+                            <div class="fahrneheitData">Pa</div>
                         </div>
                         <div class="detailsItemContainer">See details</div>
                     </section>
