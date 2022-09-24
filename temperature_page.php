@@ -37,6 +37,22 @@
     $getMaxDaily = 'SELECT temperature FROM data WHERE date_ >= "'.$day.'" AND date_ < "'.$day_plus_1.'" ORDER BY temperature DESC LIMIT 1';
     $requestGetMaxDaily = $bddConn->query($getMaxDaily);
     $outputGetMaxDaily = $requestGetMaxDaily->fetch();
+
+    $outputGetAvgHourly = array(
+        "nb_hours" => 0
+    );
+    for ($i = 0; $i < 24; $i++) {
+        $day_and_hour = $day . ' ' . strval($i) . ':00:00';
+        $day_and_hour_plus_1 = $day . ' ' . strval($i + 1) . ':00:00';
+        $getAvgDaily = 'SELECT AVG(temperature) AS "avg_temperature" FROM data WHERE date_ >= "'.$day_and_hour.'" AND date_ < "'.$day_and_hour_plus_1.'"';
+        $requestGetAvgDaily = $bddConn->query($getAvgDaily);
+        $temp_result = $requestGetAvgDaily->fetch();
+        if ($temp_result['avg_temperature'] != NULL)
+        {
+            $outputGetAvgHourly['nb_hours']++;
+            $outputGetAvgHourly += [ $i => $temp_result['avg_temperature'] ];
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -131,5 +147,79 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/temperature.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
+        <script type="text/javascript">
+            var today = new Date();
+            var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+            var realMonth = parseInt(today.getMonth()) + 1;
+            var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
+            var chartNbData = 0;
+            var chartHourlyTemp = Array();
+            var urlRequest = urlData + '?day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            $.ajax({
+                type: 'GET',
+                url: urlRequest,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    for (var i = 0; i < 24; i++)
+                    {
+                        console.log(data[i]);
+                        chartNbData++;
+                        if (data[i] != 0)
+                        {
+                            chartHourlyTemp.push(parseFloat(data[i]));
+                        }
+                        else
+                        {
+                            chartHourlyTemp.push(null);
+                        }
+                    }
+                    console.log(chartHourlyTemp);
+                }
+            });
+            setTimeout(function() {
+                const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
+                const chartDetailedTemperature = new Chart(ctx_detailed_temp, {
+                type: 'line',
+                data: {
+                    labels: timeOfTheDay,
+                    datasets: [{
+                        label: '',
+                        data: chartHourlyTemp,
+                        fill: false,
+                        borderColor: colors[5],
+                        pointBackgroundColor: colors[5],
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        }
+                    }
+                }
+            });
+            }, 1000);
+        </script>
     </body>
 </html>
