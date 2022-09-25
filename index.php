@@ -80,6 +80,13 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Temperature</div>
                         <div class="graphSubContainer">
+                            <div class="loaderHomeContainer" id="loaderTemperature">
+                                <div class="loader-wrapper">
+                                    <div class="loader">
+                                        <div class="loader loader-inner"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <canvas id="chart_detailed_temp"></canvas>
                         </div>
                     </section>
@@ -98,6 +105,13 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Relative Humidity</div>
                         <div class="graphSubContainer">
+                            <div class="loaderHomeContainer" id="loaderHumidity">
+                                <div class="loader-wrapper">
+                                    <div class="loader">
+                                        <div class="loader loader-inner"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <canvas id="chart_detailed_hum"></canvas>
                         </div>
                     </section>
@@ -113,6 +127,13 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Pressure</div>
                         <div class="graphSubContainer">
+                            <div class="loaderHomeContainer" id="loaderPressure">
+                                <div class="loader-wrapper">
+                                    <div class="loader">
+                                        <div class="loader loader-inner"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <canvas id="chart_detailed_press"></canvas>
                         </div>
                     </section>
@@ -131,6 +152,10 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
         <script type="text/javascript">
+            var loaderTemperature = document.getElementById('loaderTemperature');
+            var loaderHumidity = document.getElementById('loaderHumidity');
+            var loaderPressure = document.getElementById('loaderPressure');
+
             var today = new Date();
             var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
             var timeOfSixLastHours = Array(today.getHours()-5 +'h', today.getHours()-4 +'h', today.getHours()-3 +'h', today.getHours()-2 +'h', today.getHours()-1 +'h', today.getHours() +'h');            
@@ -143,6 +168,7 @@
                 type: 'GET',
                 url: urlRequest,
                 success: function(data) {
+                    
                     data = JSON.parse(data);
                     for (var i = 6; i > 0; i--)
                     {
@@ -161,6 +187,7 @@
                 }
             });
             setTimeout(function() {
+                loaderTemperature.style.display = "none";
                 const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
                 const chartDetailedTemperature = new Chart(ctx_detailed_temp, {
                 type: 'line',
@@ -236,6 +263,7 @@
                 }
             });
             setTimeout(function() {
+                loaderHumidity.style.display = "none";
                 const ctx_detailed_hum = document.getElementById('chart_detailed_hum').getContext('2d');
                 const chartDetailedHumidity = new Chart(ctx_detailed_hum, {
                 type: 'line',
@@ -311,6 +339,7 @@
                 }
             });
             setTimeout(function() {
+                loaderPressure.style.display = "none";
                 const ctx_detailed_press = document.getElementById('chart_detailed_press').getContext('2d');
                 const chartDetailedPressure = new Chart(ctx_detailed_press, {
                 type: 'line',

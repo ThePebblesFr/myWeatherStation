@@ -111,6 +111,13 @@
                     </section>
                     <section class="leftBottomBodyContainer">
                         <div class="graphDetailedPageSubContainer">
+                            <div class="loaderContainer" id="loaderTemperature">
+                                <div class="loader-wrapper">
+                                    <div class="loader">
+                                        <div class="loader loader-inner"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php
                                 $day_x = new DateTime($outputGetFirstDay['date_']);
                                 $day_x_1 = clone $day_x;
@@ -188,6 +195,8 @@
         <script type="text/javascript" src="js/pressure.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
         <script type="text/javascript">
+            var loaderTemperature = document.getElementById('loaderTemperature');
+
             var today = new Date();
             var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
             var realMonth = parseInt(today.getMonth()) + 1;
@@ -214,6 +223,7 @@
                 }
             });
             setTimeout(function() {
+                loaderTemperature.style.display = "none";
                 const ctx_detailed_press = document.getElementById('chart_detailed_press0').getContext('2d');
                 const chartDetailedPressure = new Chart(ctx_detailed_press, {
                 type: 'line',
@@ -265,6 +275,7 @@
             {
                 itemHistoricContainer[i].addEventListener("click", (function(arg) {
                     return function() {
+                        loaderTemperature.style.display = "flex";
                         for (var j = 0; j < itemHistoricContainer.length; j++)
                         {
                             itemHistoricContainer[j].style.backgroundColor = (arg != j) ? 'transparent' : colors[3];
@@ -274,6 +285,7 @@
                             type: 'GET',
                             url: urlRequest,
                             success: function(data) {
+                                loaderTemperature.style.display = "none";
                                 data = JSON.parse(data);
                                 for (var i = 0; i < 24; i++)
                                 {
