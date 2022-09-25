@@ -12,7 +12,8 @@
    |__________________________________________________________________________|
 
 */
-
+    $daysOfTheWeek = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+    $monthOfTheYear = array('Zebre', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
     $config_file = (object) parse_ini_file("config.ini");
     $bddConn = new PDO('mysql:host='.$config_file->servername.';dbname='.$config_file->database.';charset=utf8', $config_file->username, $config_file->password);
 
@@ -38,21 +39,10 @@
     $requestGetMaxDaily = $bddConn->query($getMaxDaily);
     $outputGetMaxDaily = $requestGetMaxDaily->fetch();
 
-    $outputGetAvgHourly = array(
-        "nb_hours" => 0
-    );
-    for ($i = 0; $i < 24; $i++) {
-        $day_and_hour = $day . ' ' . strval($i) . ':00:00';
-        $day_and_hour_plus_1 = $day . ' ' . strval($i + 1) . ':00:00';
-        $getAvgDaily = 'SELECT AVG(humidity) AS "avg_humidity" FROM data WHERE date_ >= "'.$day_and_hour.'" AND date_ < "'.$day_and_hour_plus_1.'"';
-        $requestGetAvgDaily = $bddConn->query($getAvgDaily);
-        $temp_result = $requestGetAvgDaily->fetch();
-        if ($temp_result['avg_humidity'] != NULL)
-        {
-            $outputGetAvgHourly['nb_hours']++;
-            $outputGetAvgHourly += [ $i => $temp_result['avg_humidity'] ];
-        }
-    }
+    // Get first day
+    $getFirstDay = 'SELECT * FROM data ORDER BY date_ DESC LIMIT 1';
+    $requestGetFirstDay = $bddConn->query($getFirstDay);
+    $outputGetFirstDay = $requestGetFirstDay->fetch();
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,6 +54,10 @@
         <title>myWeatherStation - Humidity</title>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script src="node_modules/chart.js/dist/chart.js"></script>
+        <script type="text/javascript">
+            var datesHistoric = Array();
+            var chartHourlyHum = Array(Array());
+        </script>
     </head>
     <body>
         <section class="leftContainer">
@@ -117,7 +111,33 @@
                     </section>
                     <section class="leftBottomBodyContainer">
                         <div class="graphDetailedPageSubContainer">
-                            <canvas id="chart_detailed_temp"></canvas>
+                            <?php
+                                $day_x = new DateTime($outputGetFirstDay['date_']);
+                                $day_x_1 = clone $day_x;
+                                $day_x_1->modify('+1 day');
+                                $getAvgDay = 'SELECT AVG(humidity) AS "avg_humidity" FROM data WHERE date_ >= "'.$day_x->format('Y-m-d').'" AND date_ < "'.$day_x_1->format('Y-m-d').'"';
+                                $requestGetAvgDay = $bddConn->query($getAvgDay);
+                                $outputGetAvgDay = $requestGetAvgDay->fetch();
+                                $nb_days = 0;
+                                while ($outputGetAvgDay['avg_humidity'] != NULL)
+                                {
+                                    echo '<canvas id="chart_detailed_hum'.$nb_days.'"></canvas>';
+                                    $day_x->modify('-1 day');
+                                    $day_x_1->modify('-1 day');
+                                    $getAvgDay = 'SELECT AVG(humidity) AS "avg_humidity" FROM data WHERE date_ >= "'.$day_x->format('Y-m-d').'" AND date_ < "'.$day_x_1->format('Y-m-d').'"';
+                                    $requestGetAvgDay = $bddConn->query($getAvgDay);
+                                    $outputGetAvgDay = $requestGetAvgDay->fetch();
+                                    
+                                    ?>
+                                    <script type="text/javascript">
+                                        var nb_days_1 = <?php echo json_encode($nb_days); ?>;
+                                        document.getElementById('chart_detailed_hum' + nb_days_1).style.display = (nb_days_1 > 0) ? 'none' : 'block';
+                                        chartHourlyHum.push(Array());
+                                    </script>
+                                    <?php
+                                    $nb_days++;
+                                }
+                            ?>
                         </div>
                     </section>
                     <section class="leftStatsBodyContainer">
@@ -129,19 +149,39 @@
                 <section class="rightBodyContainer">
                     <section class="titleHistoricContainer">Past days</section>
                     <section class="contentHistoricContainer">
+                    <?php
+                        $day_x = new DateTime($outputGetFirstDay['date_']);
+                        $day_x_1 = clone $day_x;
+                        $day_x_1->modify('+1 day');
+                        $getAvgDay = 'SELECT AVG(humidity) AS "avg_humidity" FROM data WHERE date_ >= "'.$day_x->format('Y-m-d').'" AND date_ < "'.$day_x_1->format('Y-m-d').'"';
+                        $requestGetAvgDay = $bddConn->query($getAvgDay);
+                        $outputGetAvgDay = $requestGetAvgDay->fetch();
+                        $nb_days = 0;
+                        while ($outputGetAvgDay['avg_humidity'] != NULL)
+                        {
+                    ?>
                         <div class="itemHistoricContainer">
-                            <div>Sat 24 Sept</div>
-                            <div>56%</div>
-                            <div><img src="assets/images/humid_icon.png" class="iconHistoric" id="humidityHistoricIcon"/></div>
+                            <div class="dayHistoricContainer"><?php echo $daysOfTheWeek[date("w", strtotime($day_x->format('Y-m-d')))] . ' ' . $day_x->format('d') . ' ' . $monthOfTheYear[intval($day_x->format('m'))]; ?></div>
+                            <div><?php echo number_format($outputGetAvgDay['avg_humidity'], 2); ?>%</div>
+                            <div><img src="assets/images/humid_icon.png" class="iconHistoric" id="humidityHistoricIcon<?php echo $nb_days; ?>"/></div>
                         </div>
-                        <div class="itemHistoricContainer">
-                            <div>Sat 24 Sept</div>
-                            <div>26%</div>
-                            <div><img src="assets/images/dry_icon.png" class="iconHistoric" id="humidityHistoricIcon"/></div>
-                        </div>
+                        <script type="text/javascript">
+                            datesHistoric.push(<?php echo json_encode($day_x->format('Y-m-d')); ?>)
+                            var nb_days = <?php echo json_encode($nb_days); ?>;
+                            var valueHum = <?php echo json_encode($outputGetAvgDay['avg_humidity']); ?>;
+                            document.getElementById("humidityHistoricIcon" + nb_days).src = (valueHum > 50) ? "assets/images/humid_icon.png" : "assets/images/dry_icon.png";
+                        </script>
+                    <?php
+                            $day_x->modify('-1 day');
+                            $day_x_1->modify('-1 day');
+                            $getAvgDay = 'SELECT AVG(humidity) AS "avg_humidity" FROM data WHERE date_ >= "'.$day_x->format('Y-m-d').'" AND date_ < "'.$day_x_1->format('Y-m-d').'"';
+                            $requestGetAvgDay = $bddConn->query($getAvgDay);
+                            $outputGetAvgDay = $requestGetAvgDay->fetch();
+                            $nb_days++;
+                        }
+                    ?>
                     </section>
                 </section>
-
             </section>
         </section>
         <script type="text/javascript" src="js/script.js"></script>
@@ -153,7 +193,6 @@
             var realMonth = parseInt(today.getMonth()) + 1;
             var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
             var chartNbData = 0;
-            var chartHourlyTemp = Array();
             var urlRequest = urlData + '?data=humidity&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
             $.ajax({
                 type: 'GET',
@@ -162,29 +201,27 @@
                     data = JSON.parse(data);
                     for (var i = 0; i < 24; i++)
                     {
-                        console.log(data[i]);
                         chartNbData++;
                         if (data[i] != 0)
                         {
-                            chartHourlyTemp.push(parseFloat(data[i]));
+                            chartHourlyHum[0].push(parseFloat(data[i]));
                         }
                         else
                         {
-                            chartHourlyTemp.push(null);
+                            chartHourlyHum[0].push(null);
                         }
                     }
-                    console.log(chartHourlyTemp);
                 }
             });
             setTimeout(function() {
-                const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
-                const chartDetailedHumidity = new Chart(ctx_detailed_temp, {
+                const ctx_detailed_hum = document.getElementById('chart_detailed_hum0').getContext('2d');
+                const chartDetailedHumidity = new Chart(ctx_detailed_hum, {
                 type: 'line',
                 data: {
                     labels: timeOfTheDay,
                     datasets: [{
                         label: '',
-                        data: chartHourlyTemp,
+                        data: chartHourlyHum[0],
                         fill: false,
                         borderColor: colors[5],
                         pointBackgroundColor: colors[5],
@@ -220,6 +257,88 @@
                 }
             });
             }, 1000);
+
+            var itemHistoricContainer = document.getElementsByClassName("itemHistoricContainer");
+            itemHistoricContainer[0].style.backgroundColor = colors[3];
+
+            for (var i = 0; i < itemHistoricContainer.length; i++)
+            {
+                itemHistoricContainer[i].addEventListener("click", (function(arg) {
+                    return function() {
+                        for (var j = 0; j < itemHistoricContainer.length; j++)
+                        {
+                            itemHistoricContainer[j].style.backgroundColor = (arg != j) ? 'transparent' : colors[3];
+                        }
+                        urlRequest = urlData + '?data=humidity&day=' + datesHistoric[arg];
+                        $.ajax({
+                            type: 'GET',
+                            url: urlRequest,
+                            success: function(data) {
+                                data = JSON.parse(data);
+                                for (var i = 0; i < 24; i++)
+                                {
+                                    chartNbData++;
+                                    if (data[i] != 0)
+                                    {
+                                        chartHourlyHum[arg].push(parseFloat(data[i]));
+                                    }
+                                    else
+                                    {
+                                        chartHourlyHum[arg].push(null);
+                                    }
+                                }
+                                document.getElementById('chart_detailed_hum' + arg).style.display = 'block';
+                                for (var j = 0; j < itemHistoricContainer.length; j++)
+                                {
+                                    document.getElementById('chart_detailed_hum' + j).style.display = (arg != j) ? 'none' : 'block';
+                                }
+                                const ctx_detailed_hum = document.getElementById('chart_detailed_hum' + arg).getContext('2d');
+                                const chartDetailedHumidity = new Chart(ctx_detailed_hum, {
+                                type: 'line',
+                                data: {
+                                    labels: timeOfTheDay,
+                                    datasets: [{
+                                        label: '',
+                                        data: chartHourlyHum[arg],
+                                        fill: false,
+                                        borderColor: colors[5],
+                                        pointBackgroundColor: colors[5],
+                                        tension: 0.2
+                                    }]
+                                },
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            grid: {
+                                                color: colors[0],
+                                                borderColor: colors[0]
+                                            },
+                                            ticks: {
+                                                color: colors[0],
+                                            }
+                                        },
+                                        y: {
+                                            grid: {
+                                                color: colors[0],
+                                                borderColor: colors[0]
+                                            },
+                                            ticks: {
+                                                color: colors[0],
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            }
+                        });
+                    };
+                }) (i));
+            }
         </script>
     </body>
 </html>
