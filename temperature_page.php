@@ -50,6 +50,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/temperature.css" />
+        <link rel="icon" type="image/png" href="assets/images/logo_weather_station_colored.png" />
         <title>myWeatherStation - Temperature</title>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script src="node_modules/chart.js/dist/chart.js"></script>
@@ -259,11 +260,16 @@
             }, 1000);
 
             var itemHistoricContainer = document.getElementsByClassName("itemHistoricContainer");
+            itemHistoricContainer[0].style.backgroundColor = colors[3];
 
             for (var i = 0; i < itemHistoricContainer.length; i++)
             {
                 itemHistoricContainer[i].addEventListener("click", (function(arg) {
                     return function() {
+                        for (var j = 0; j < itemHistoricContainer.length; j++)
+                        {
+                            itemHistoricContainer[j].style.backgroundColor = (arg != j) ? 'transparent' : colors[3];
+                        }
                         urlRequest = urlData + '?data=temperature&day=' + datesHistoric[arg];
                         $.ajax({
                             type: 'GET',
@@ -331,9 +337,6 @@
                             });
                             }
                         });
-                        setTimeout(function() {
-                            
-                        }, 1000);
                     };
                 }) (i));
             }
