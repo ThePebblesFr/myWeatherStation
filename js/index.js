@@ -15,6 +15,8 @@
 /* ----------------------------------------------------------------------------
                                      INIT
 ---------------------------------------------------------------------------- */
+var urlData = "http://software-developments-pg.com/others/myWeatherStation/all_data.php";
+
 var iconsMenu = document.getElementsByClassName('menuIcon');
 var nameIconsMenu = Array('home', 'temperature', 'humidity', 'pressure');
 
@@ -29,140 +31,11 @@ var dayNightIcon = document.getElementById('dayNightIcon');
 var dateContainer = document.getElementById('dateContainer');
 var timeContainer = document.getElementById('timeContainer');
 
-const ctx_temp = document.getElementById('chartTemperature').getContext('2d');
-const ctx_hum = document.getElementById('chartHumidity').getContext('2d');
-const ctx_press = document.getElementById('chartPressure').getContext('2d');
-
 /* ----------------------------------------------------------------------------
                                     MAIN
 ---------------------------------------------------------------------------- */
 
 // Charts index.php -----------------------------------------------------------
-const chartTemperature = new Chart(ctx_temp, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
-
-const chartHumidity = new Chart(ctx_hum, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
-
-const chartPressure = new Chart(ctx_press, {
-    type: 'line',
-    data: {
-        labels: ['10h', '11h', '12h', '13h', '14h', '15h'],
-        datasets: [{
-            label: '',
-            data: [22.43, 24.12, 24.43, 25.10, 26.56, 25.49],
-            fill: false,
-            borderColor: colors[4],
-            pointBackgroundColor: colors[4],
-            tension: 0.2
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            },
-            y: {
-                grid: {
-                    color: colors[0],
-                    borderColor: colors[0]
-                },
-                ticks: {
-                    color: colors[0],
-                }
-            }
-        }
-    }
-});
 
 for (var i = 0; i < iconsMenu.length; i++) {
     if (i != 3)

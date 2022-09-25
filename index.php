@@ -79,7 +79,7 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Temperature</div>
                         <div class="graphSubContainer">
-                            <canvas id="chartTemperature"></canvas>
+                            <canvas id="chart_detailed_temp"></canvas>
                         </div>
                     </section>
                     <section class="dataHomeContainer">
@@ -97,7 +97,7 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Relative Humidity</div>
                         <div class="graphSubContainer">
-                            <canvas id="chartHumidity"></canvas>
+                            <canvas id="chart_detailed_hum"></canvas>
                         </div>
                     </section>
                     <section class="dataHomeContainer">
@@ -112,7 +112,7 @@
                     <section class="graphContainer">
                         <div class="titleDataHome">Pressure</div>
                         <div class="graphSubContainer">
-                            <canvas id="chartPressure"></canvas>
+                            <canvas id="chart_detailed_press"></canvas>
                         </div>
                     </section>
                     <section class="dataHomeContainer">
@@ -129,5 +129,230 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/dimensions.js"></script>
+        <script type="text/javascript">
+            var today = new Date();
+            var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+            var timeOfSixLastHours = Array(today.getHours()-5 +'h', today.getHours()-4 +'h', today.getHours()-3 +'h', today.getHours()-2 +'h', today.getHours()-1 +'h', today.getHours() +'h');            
+            var realMonth = parseInt(today.getMonth()) + 1;
+            var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
+            var chartNbData = 0;
+            var chartHourlyTemp = Array();
+            var urlRequest = urlData + '?data=temperature&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            $.ajax({
+                type: 'GET',
+                url: urlRequest,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    for (var i = 6; i > 0; i--)
+                    {
+                        console.log(data[i]);
+                        chartNbData++;
+                        if (data[i] != 0)
+                        {
+                            chartHourlyTemp.push(parseFloat(data[i]));
+                        }
+                        else
+                        {
+                            chartHourlyTemp.push(null);
+                        }
+                    }
+                    console.log(chartHourlyTemp);
+                }
+            });
+            setTimeout(function() {
+                const ctx_detailed_temp = document.getElementById('chart_detailed_temp').getContext('2d');
+                const chartDetailedTemperature = new Chart(ctx_detailed_temp, {
+                type: 'line',
+                data: {
+                    labels: timeOfSixLastHours,
+                    datasets: [{
+                        label: '',
+                        data: chartHourlyTemp,
+                        fill: false,
+                        borderColor: colors[5],
+                        pointBackgroundColor: colors[5],
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        }
+                    }
+                }
+            });
+            }, 1000);
+        </script>
+        <script type="text/javascript">
+            var today = new Date();
+            var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+            var timeOfSixLastHours = Array(today.getHours()-5 +'h', today.getHours()-4 +'h', today.getHours()-3 +'h', today.getHours()-2 +'h', today.getHours()-1 +'h', today.getHours() +'h');            
+            var realMonth = parseInt(today.getMonth()) + 1;
+            var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
+            var chartNbData = 0;
+            var chartHourlyHum = Array();
+            var urlRequest = urlData + '?data=humidity&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            $.ajax({
+                type: 'GET',
+                url: urlRequest,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    for (var i = 6; i > 0; i--)
+                    {
+                        console.log(data[i]);
+                        chartNbData++;
+                        if (data[i] != 0)
+                        {
+                            chartHourlyHum.push(parseFloat(data[i]));
+                        }
+                        else
+                        {
+                            chartHourlyHum.push(null);
+                        }
+                    }
+                    console.log(chartHourlyHum);
+                }
+            });
+            setTimeout(function() {
+                const ctx_detailed_hum = document.getElementById('chart_detailed_hum').getContext('2d');
+                const chartDetailedHumidity = new Chart(ctx_detailed_hum, {
+                type: 'line',
+                data: {
+                    labels: timeOfSixLastHours,
+                    datasets: [{
+                        label: '',
+                        data: chartHourlyHum,
+                        fill: false,
+                        borderColor: colors[5],
+                        pointBackgroundColor: colors[5],
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        }
+                    }
+                }
+            });
+            }, 1000);
+        </script>
+        <script type="text/javascript">
+            var today = new Date();
+            var dayNumber = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+            var timeOfSixLastHours = Array(today.getHours()-5 +'h', today.getHours()-4 +'h', today.getHours()-3 +'h', today.getHours()-2 +'h', today.getHours()-1 +'h', today.getHours() +'h');            
+            var realMonth = parseInt(today.getMonth()) + 1;
+            var monthNumber = (realMonth < 10) ? '0' + realMonth : realMonth;
+            var chartNbData = 0;
+            var chartHourlyPress = Array();
+            var urlRequest = urlData + '?data=pressure&day=' + today.getFullYear() + '-' + monthNumber + '-' + dayNumber;
+            $.ajax({
+                type: 'GET',
+                url: urlRequest,
+                success: function(data) {
+                    data = JSON.parse(data);
+                    for (var i = 6; i > 0; i--)
+                    {
+                        console.log(data[i]);
+                        chartNbData++;
+                        if (data[i] != 0)
+                        {
+                            chartHourlyPress.push(parseFloat(data[i]));
+                        }
+                        else
+                        {
+                            chartHourlyPress.push(null);
+                        }
+                    }
+                    console.log(chartHourlyPress);
+                }
+            });
+            setTimeout(function() {
+                const ctx_detailed_press = document.getElementById('chart_detailed_press').getContext('2d');
+                const chartDetailedPressure = new Chart(ctx_detailed_press, {
+                type: 'line',
+                data: {
+                    labels: timeOfSixLastHours,
+                    datasets: [{
+                        label: '',
+                        data: chartHourlyPress,
+                        fill: false,
+                        borderColor: colors[5],
+                        pointBackgroundColor: colors[5],
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: colors[0],
+                                borderColor: colors[0]
+                            },
+                            ticks: {
+                                color: colors[0],
+                            }
+                        }
+                    }
+                }
+            });
+            }, 1000);
+        </script>
     </body>
 </html>
