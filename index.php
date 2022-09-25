@@ -30,6 +30,7 @@
         <title>myWeatherStation - Welcome</title>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script src="node_modules/chart.js/dist/chart.js"></script>
+        <link rel="icon" type="image/x-icon" href="assets/images/logo_weather_station.ico" />
     </head>
     <body>
         <section class="leftContainer">

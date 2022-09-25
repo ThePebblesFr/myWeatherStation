@@ -60,6 +60,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/pressure.css" />
+        <link rel="icon" type="image/png" href="assets/images/logo_weather_station_colored.png" />
         <title>myWeatherStation - Pressure</title>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script src="node_modules/chart.js/dist/chart.js"></script>
